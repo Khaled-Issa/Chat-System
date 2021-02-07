@@ -12,8 +12,7 @@ class MessagesController < ApplicationController
   
     # POST /applications/:application_token/chats
     def create
-      chat = Application.find_by(application_token: params[:application_token]).chats.find_by(number: params[:chat_number])
-        
+      chat = Application.find_by(application_token: params[:application_token]).chats.find_by(number: params[:chat_number]).perform_async
       chat.messages.create!(message_params)
       json_response(chat.messages.last, :created)
     end
