@@ -18,7 +18,7 @@ class ApplicationsController < ApplicationController
     end
   end
 
-  # GET /applications/:token
+  # GET /applications/:name
   def show
     application= Application.find_by(application_token: params[:token])
 
@@ -30,13 +30,13 @@ class ApplicationsController < ApplicationController
     render json: {status:'SUCCESS', message:'Loaded article', data:data}, status: :ok
   end
 
-  # PUT /applications/:token
+  # PUT /applications/:name
   def update
     application = Application.find_by(application_token: params[:token])
     if application.update_attributes(application_params)
-      render json: {data:application}, status :updated
+      render json: {status: 'SUCCESS', message:'Update', data:application}
     else
-      render json: {data:application.erros}, status: :unprocessable_entity
+      render json: {status:'ERROR', message:'Apllication not updated', data:application.erros}, status: :unprocessable_entity
     end
   end
 
